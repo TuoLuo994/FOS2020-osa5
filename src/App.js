@@ -16,6 +16,7 @@ const App = () => {
   const [message, setMessage] = useState(null)
 
   const blogFormRef = React.createRef()
+  const likesRef = React.createRef()
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -31,7 +32,23 @@ const App = () => {
       blogService.setToken(user.token)
     }
   }, [])
+  const addLike = () => {
+    const newLikes = likesRef.current.likes+1
+    const blog = likesRef.current.blog
+    const blogObject = {
+      user : blog.user.id,
+      likes : newLikes,
+      author : blog.author,
+      title : blog.title,
+      url : blog.url
+    }
+    const id = blog.id
 
+    blogService
+      .update(id, blogObject)
+      .then(likesRef.current.setLikes(newLikes))
+
+  }
   const handleLogin = async (event) => {
     event.preventDefault()
     try {
@@ -113,7 +130,13 @@ const App = () => {
       <h2>create new</h2>
       {blogForm()}
       {blogs.sort((a,b) => b.likes-a.likes).map(blog =>
-        <Blog key={blog.id} blog={blog} user={user}/>
+        <Blog
+          key={blog.id}
+          blog={blog}
+          user={user}
+          addLike={addLike}
+          ref={likesRef}
+        />
       )}
     </div>
   )
