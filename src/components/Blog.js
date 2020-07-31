@@ -38,7 +38,7 @@ const Blog = React.forwardRef(({ blog, user, addLike }, ref) => {
     return(false)
   if(enlarged){
     return(
-      <div style={blogStyle}>
+      <div className='blog' style={blogStyle}>
         <div>
           {blog.title} {blog.author}
           <button onClick={toggleEnlarge}>hide</button>
@@ -46,7 +46,7 @@ const Blog = React.forwardRef(({ blog, user, addLike }, ref) => {
         <div>{blog.url}</div>
         <div>
           likes {likes}
-          <button onClick={addLike}>like</button>
+          <button id='add-like' onClick={addLike}>like</button>
         </div>
         <div>{blog.user.username}</div>
         {user.username === blog.user.username ?
@@ -61,7 +61,7 @@ const Blog = React.forwardRef(({ blog, user, addLike }, ref) => {
     )
   }
   return(
-    <div style={blogStyle}>
+    <div className='blog' style={blogStyle}>
       {blog.title} {blog.author}
       <button onClick={toggleEnlarge}>view</button>
     </div>

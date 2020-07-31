@@ -25,7 +25,7 @@ const App = () => {
   }, [])
 
   useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem('loggedNoteappUser')
+    const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
       setUser(user)
@@ -56,7 +56,7 @@ const App = () => {
         username, password,
       })
       window.localStorage.setItem(
-        'loggedNoteappUser', JSON.stringify(user)
+        'loggedBlogappUser', JSON.stringify(user)
       )
       blogService.setToken(user.token)
       setUser(user)
@@ -101,22 +101,24 @@ const App = () => {
           <div>
             username
             <input
+              id='username'
               type="text"
               value={username}
-              name="Username"
               onChange={({ target }) => setUsername(target.value)}
             />
           </div>
           <div>
             password
             <input
+              id='password'
               type="password"
               value={password}
-              name="Password"
               onChange={({ target }) => setPassword(target.value)}
             />
           </div>
-          <button type="submit">login</button>
+          <button id="login-button" type="submit">
+            login
+          </button>
         </form>
       </div>
     )
@@ -126,7 +128,7 @@ const App = () => {
       <h2>blogs</h2>
       <Notification message={message} />
       {user.name} logged in
-      <button onClick={() => window.localStorage.removeItem('loggedNoteappUser')}>logout</button>
+      <button onClick={() => window.localStorage.removeItem('loggedBlogappUser')}>logout</button>
       <h2>create new</h2>
       {blogForm()}
       {blogs.sort((a,b) => b.likes-a.likes).map(blog =>
